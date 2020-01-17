@@ -1,0 +1,117 @@
+/*!
+ * Modified example from the dash bootstrap components GitHub.
+ * Original by tcbegley.
+ *
+ * https://github.com/facultyai/dash-bootstrap-components/tree/master/
+ * examples/multi-page-apps/responsive-collapsible-sidebar
+ */
+
+/* add the three horizontal bars icon for the toggle */
+.navbar-toggler-icon:before {
+  font-family: FontAwesome;
+  top:0;
+  left:-5px;
+  padding-right:10px;
+  content: "\f0c9";
+  font-size: 150%;
+}
+
+/*!
+ * custom styles for individual page elements
+ * on a small screen
+ */
+#sidebar {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #f8f9fa;
+}
+
+#sidebar h2 {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+/* Hide the blurb on a small screen */
+#blurb {
+  display: none;
+}
+
+#sidebar-toggle {
+  display: none;
+}
+
+#collapse *:first-child {
+  margin-top: 1rem;
+}
+
+#page-content {
+  padding: 2rem 1rem;
+}
+
+
+/*!
+ * custom styles for individual elements
+ * on a large screen (min-width: 48em)
+ */
+@media (min-width: 48em) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 21rem;
+    text-align: left;
+    transition: margin 0.3s ease-in-out, padding 0.3s ease-in-out;
+  }
+
+  #sidebar-toggle {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    transition: top 0.3s ease-in-out;
+  }
+
+  /* add negative margin to sidebar to achieve the collapse */
+  #sidebar.collapsed {
+    margin-left: -15.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* move the sidebar toggle up to the top left corner */
+  #sidebar.collapsed #sidebar-toggle {
+    top: -2rem;
+  }
+
+  /* also adjust margin of page content */
+  #sidebar.collapsed ~ #page-content {
+    margin-left: 6.5rem;
+  }
+
+  /* move all contents of navbar other than header (containing toggle) further
+     off-screen */
+  #sidebar.collapsed > *:not(:first-child) {
+    margin-left: -6rem;
+    margin-right: 6rem;
+  }
+
+  /* reveal the blurb on a large screen */
+  #blurb {
+    display: block;
+  }
+
+  /* Hide the toggle on a large screen */
+  #navbar-toggle {
+    display: none;
+  }
+
+  #collapse {
+    display: block;
+  }
+
+  /* set margins of the main content so that it doesn't overlap the sidebar */
+  #page-content {
+    margin-left: 22rem;
+    margin-right: 2rem;
+    transition: margin-left 0.3s ease-in-out;
+  }
+}
