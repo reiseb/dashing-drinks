@@ -1,6 +1,9 @@
 """Build the layout of the dashboard."""
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
+from dash_table.Format import Format
 
 
 def serve_layout():
@@ -20,18 +23,38 @@ def serve_layout():
         children=[
             html.H1(
                 children=('Getränkekasse'),
-                className='display-4',
+                className='display-5',
                 style={
-                    'margin-top': '4rem',
+                    'margin-top': '3rem',
                     'margin-bottom': '3rem'
                 }
             ),
             html.P(
                 dbc.Row(
-                    dbc.Col(
-                        build_info_cards(),
-                        width=12
-                    )
+                    children=[
+                        dbc.Col(
+                            build_info_cards(),
+                            width=12
+                        )
+                    ]
+                )
+            ),
+            html.P(
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            build_purchase_timeline(),
+                            width=4
+                        ),
+                        dbc.Col(
+                            build_chart(),
+                            width=4
+                        ),
+                        dbc.Col(
+                            build_debt_table(),
+                            width=4
+                        ),
+                    ]
                 )
             )
         ],
@@ -144,5 +167,115 @@ def info_card(ident, icon, title, value, color):
             ]
         ),
         style={'background-color': color}
+    )
+    return card
+
+
+def build_debt_table():
+    """Build a table with current debts."""
+    card = dbc.Card(
+        children=[
+            dbc.CardHeader(
+                html.H2("Prangerliste"),
+            ),
+            dbc.CardBody(
+                dash_table.DataTable(
+                    id='data_table',
+                    columns=[
+                        {
+                            'id': 'name',
+                            'name': 'Name',
+                            'type': 'text'
+                        }, {
+                            'id': 'debts',
+                            'name': 'Schulden',
+                            'type': 'numeric',
+                            'format': Format(
+                                scheme='f',
+                                precision=2
+                            ),
+                        }
+                    ],
+                    data=[],
+                    style_table={
+                        'maxHeight': '835px',
+                        'overflowY': 'scroll',
+                    },
+                    style_header={
+                        'backgroundColor': '#d1d1d1ff',
+                        'fontWeight': 'bold',
+                        'fontSize': '130%',
+                        'textAlign': 'center',
+                    },
+                    style_filter={
+                        'fontSize': '130%',
+                        'padding': '20px'
+                    },
+                    style_cell={
+                        'padding': '5px',
+                        'textAlign': 'center',
+                        'fontSize': '120%',
+                        'fontFamily': 'Helvetica',
+                        'height': '120%'
+                    },
+                    style_data_conditional=[
+                        {
+                            'if': {'row_index': 'odd'},
+                            'backgroundColor': '#f5f5f5ff'
+                        }
+                    ],
+                    fixed_rows={"headers": True, "data": 0},
+                    style_as_list_view=True,
+                    row_selectable='single',
+                    selected_rows=[0],
+                    filter_action="native",
+                    sort_action="native",
+                    # additional css is needed because max-height is by default
+                    # hard-coded to 500px when using fixed_rows
+                    # https://community.plot.ly/t/setting-datatable-max-height-when-using-fixed-headers/26417/3?u=reiseb
+                    css=[
+                        {"selector": "table",
+                         "rule": "width: 100%;"},
+                        {"selector": ".dash-spreadsheet.dash-freeze-top," +
+                         ".dash-spreadsheet.dash-virtualized",
+                         "rule": "max-height: 1000px;"}
+                    ]
+                )
+            )
+        ]
+    )
+    return card
+
+
+def build_purchase_timeline():
+    """Build a timeline of purchases."""
+    card = dbc.Card(
+        children=[
+            dbc.CardHeader(
+                html.H2("Käufe über Zeit"),
+            ),
+            dbc.CardBody(
+                children=[
+                    dcc.Graph()
+                ]
+            )
+        ]
+    )
+    return card
+
+
+def build_chart():
+    """Build a diagram of who purchased what."""
+    card = dbc.Card(
+        children=[
+            dbc.CardHeader(
+                html.H2("Statistik"),
+            ),
+            dbc.CardBody(
+                children=[
+                    dcc.Graph()
+                ]
+            )
+        ]
     )
     return card
