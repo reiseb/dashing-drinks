@@ -214,7 +214,7 @@ def build_debt_table():
                             'type': 'text'
                         }, {
                             'id': 'debts',
-                            'name': 'Schulden',
+                            'name': 'Schulden [EUR]',
                             'type': 'numeric',
                             'format': Format(
                                 scheme='f',
@@ -231,7 +231,7 @@ def build_debt_table():
                         'backgroundColor': '#d1d1d1ff',
                         'fontWeight': 'bold',
                         'fontSize': '130%',
-                        'textAlign': 'center',
+                        'textAlign': 'left',
                     },
                     style_filter={
                         'fontSize': '130%',
@@ -239,7 +239,7 @@ def build_debt_table():
                     },
                     style_cell={
                         'padding': '5px',
-                        'textAlign': 'center',
+                        'textAlign': 'left',
                         'fontSize': '120%',
                         'fontFamily': 'Helvetica',
                         'height': '120%'
@@ -250,22 +250,11 @@ def build_debt_table():
                             'backgroundColor': '#f5f5f5ff'
                         }
                     ],
-                    fixed_rows={"headers": True, "data": 0},
                     style_as_list_view=True,
                     row_selectable='single',
                     selected_rows=[0],
-                    filter_action="native",
+                    filter_action="none",
                     sort_action="native",
-                    # additional css is needed because max-height is by default
-                    # hard-coded to 500px when using fixed_rows
-                    # https://community.plot.ly/t/setting-datatable-max-height-when-using-fixed-headers/26417/3?u=reiseb
-                    css=[
-                        {"selector": "table",
-                         "rule": "width: 100%;"},
-                        {"selector": ".dash-spreadsheet.dash-freeze-top," +
-                         ".dash-spreadsheet.dash-virtualized",
-                         "rule": "max-height: 1000px;"}
-                    ]
                 )
             )
         ]
