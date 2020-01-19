@@ -245,6 +245,12 @@ def build_debt_table():
                         'fontFamily': 'Helvetica',
                         'height': '120%'
                     },
+                    style_data_conditional=[
+                        {
+                            'if': {'row_index': 'odd'},
+                            'backgroundColor': '#f5f5f5ff'
+                        }
+                    ],
                     style_as_list_view=True,
                     filter_action="none",
                     sort_action="native",
