@@ -62,7 +62,9 @@ def serve_layout():
                         build_debt_table(),
                     ]
                 )
-            )
+            ),
+            # modal
+            build_modal()
         ],
     )
     return layout
@@ -293,3 +295,55 @@ def build_chart():
         ]
     )
     return card
+
+
+def build_modal():
+    """Build a modal to confirm resetting the debt list."""
+    modal = dbc.Modal(
+        id='modal',
+        children=[
+            dbc.ModalHeader(
+                html.H2('Really reset?')
+            ),
+            dbc.ModalBody(
+                children=[
+                    html.P(
+                        children=[
+                            "Type in your username and press the button ",
+                            "to reset the debt list."
+                        ]
+                    ),
+                    html.P(
+                        dbc.Input(
+                            id="modal-input",
+                            value="",
+                            placeholder="Type your username...",
+                            type="text",
+                            debounce=False,
+                            minLength=3,
+                            maxLength=10,
+                            invalid=True,
+                        )
+                    ),
+                    html.P(
+                        dbc.Button(
+                            children="Reset",
+                            id="reset-confirm-button",
+                            color="danger",
+                            style={'fontSize': '120%'}
+                        ),
+                    )
+                ],
+                style={'fontSize': '110%'}
+            ),
+            dbc.ModalFooter(
+                dbc.Button(
+                    'Cancel',
+                    id='modal-close-button',
+                    style={'fontSize': '120%'}
+                )
+            ),
+        ],
+        is_open=False
+    )
+    return modal
