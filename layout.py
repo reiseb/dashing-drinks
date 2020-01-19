@@ -21,6 +21,19 @@ def serve_layout():
     layout = dbc.Container(
         style={'max-width': '80%'},
         children=[
+            # update every 15 minutes
+            dcc.Interval(
+                id='interval-component',
+                interval=15 * 60 * 1000,  # in milliseconds
+                n_intervals=0
+            ),
+            # hidden div for shared data
+            html.Div(
+                id='shared_data',
+                children=[],
+                style={'display': 'none'}
+            ),
+            # title
             html.H1(
                 children=('Getränkekasse'),
                 className='display-5',
@@ -29,6 +42,7 @@ def serve_layout():
                     'margin-bottom': '3rem'
                 }
             ),
+            # info boxes
             html.P(
                 dbc.Row(
                     children=[
@@ -39,6 +53,7 @@ def serve_layout():
                     ]
                 )
             ),
+            # content
             html.P(
                 dbc.Row(
                     children=[
@@ -206,7 +221,7 @@ def build_debt_table():
             ),
             dbc.CardBody(
                 dash_table.DataTable(
-                    id='data_table',
+                    id='debt_table',
                     columns=[
                         {
                             'id': 'name',
