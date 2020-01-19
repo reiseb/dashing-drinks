@@ -171,8 +171,10 @@ def update_royal(shared_data):
     """
     purch = pd.read_json(shared_data)
     counts = purch.groupby("name")["product"].count()
-    royal = counts.idxmax()
-    return royal
+
+    value = "{:s} ({:d} St.)".format(counts.idxmax(), counts.max())
+
+    return value
 
 
 @app.callback(
@@ -199,6 +201,6 @@ def update_bestseller(shared_data):
 
     mask = (purch['date'].dt.month == this_month)
     counts = purch[mask].groupby("product")["name"].count()
-    bestseller = counts.idxmax()
+    value = counts.idxmax()
 
-    return bestseller
+    return value

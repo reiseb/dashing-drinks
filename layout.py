@@ -87,28 +87,31 @@ def build_info_cards():
                 icon="fa fa-heart",
                 title="Bestseller des Monats",
                 value="",
-                color="#802020"
+                color="#802020",
+                fontsize="200%"
             ),
             info_card(
                 ident="info-box-royal",
                 icon="fa fa-crown",
                 title="Getränkekönig*in",
                 value="",
-                color="#a07000"
+                color="#a07000",
+                fontsize="300%"
             ),
             info_card(
                 ident="info-box-revenue",
                 icon="fa fa-money-bill-wave",
                 title="",
                 value="",
-                color="#216b27"
+                color="#216b27",
+                fontsize="300%"
             ),
         ]
     )
     return cards
 
 
-def info_card(ident, icon, title, value, color):
+def info_card(ident, icon, title, value, color, fontsize):
     """Build a single info card.
 
     Parameters
@@ -124,6 +127,8 @@ def info_card(ident, icon, title, value, color):
         Value of the info card. Accessible in callbacks via <ident>-value.
     color : str
         Background color in hex notation (e.g. '#000000')
+    fontsize : str
+        CSS fontsize property.
 
     Returns
     -------
@@ -137,26 +142,13 @@ def info_card(ident, icon, title, value, color):
                 dbc.Row(
                     children=[
                         dbc.Col(
-                            html.I(
-                                className=icon,
-                                style={
-                                    'padding-top': '10%',
-                                    'font-size': '500%',
-                                    'color': '#eeeeee',
-                                    'opacity': '0.5',
-                                    'vertical-align': 'middle'
-                                }
-                            ),
-                            width=4,
-                        ),
-                        dbc.Col(
                             children=[
                                 html.H1(
                                     id=ident + "-value",
                                     children=value,
                                     style={
                                         'font-weight': 'bold',
-                                        'font-size': '250%',
+                                        'font-size': fontsize,
                                         'color': '#eeeeee'
                                     }
                                 ),
@@ -165,14 +157,27 @@ def info_card(ident, icon, title, value, color):
                                     children=title,
                                     style={
                                         'color': '#eeeeee',
+                                        'margin-bottom': '0pt',
                                     }
                                 )
                             ],
-                            width=7
-                        )
-                    ]
+                            width=9,
+                        ),
+                        dbc.Col(
+                            html.I(
+                                className=icon,
+                                style={
+                                    'font-size': '450%',
+                                    'color': '#eeeeee',
+                                    'opacity': '0.5',
+                                    'text-align': 'center'
+                                }
+                            ),
+                            width=3,
+                        ),
+                    ],
                 )
-            ]
+            ],
         ),
         style={'background-color': color}
     )
