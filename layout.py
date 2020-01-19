@@ -55,20 +55,11 @@ def serve_layout():
             ),
             # content
             html.P(
-                dbc.Row(
+                dbc.CardDeck(
                     children=[
-                        dbc.Col(
-                            build_purchase_timeline(),
-                            width=4
-                        ),
-                        dbc.Col(
-                            build_chart(),
-                            width=4
-                        ),
-                        dbc.Col(
-                            build_debt_table(),
-                            width=4
-                        ),
+                        build_purchase_timeline(),
+                        build_chart(),
+                        build_debt_table(),
                     ]
                 )
             )
@@ -228,7 +219,7 @@ def build_debt_table():
                             'name': 'Name',
                             'type': 'text'
                         }, {
-                            'id': 'debts',
+                            'id': 'price',
                             'name': 'Schulden [EUR]',
                             'type': 'numeric',
                             'format': Format(
@@ -240,34 +231,21 @@ def build_debt_table():
                     data=[],
                     style_table={
                         'maxHeight': '835px',
-                        'overflowY': 'scroll',
                     },
                     style_header={
                         'backgroundColor': '#d1d1d1ff',
                         'fontWeight': 'bold',
                         'fontSize': '130%',
-                        'textAlign': 'left',
-                    },
-                    style_filter={
-                        'fontSize': '130%',
-                        'padding': '20px'
+                        'textAlign': 'center',
                     },
                     style_cell={
                         'padding': '5px',
-                        'textAlign': 'left',
+                        'textAlign': 'center',
                         'fontSize': '120%',
                         'fontFamily': 'Helvetica',
                         'height': '120%'
                     },
-                    style_data_conditional=[
-                        {
-                            'if': {'row_index': 'odd'},
-                            'backgroundColor': '#f5f5f5ff'
-                        }
-                    ],
                     style_as_list_view=True,
-                    row_selectable='single',
-                    selected_rows=[0],
                     filter_action="none",
                     sort_action="native",
                 )

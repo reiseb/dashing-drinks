@@ -49,3 +49,30 @@ def update_data(n_intervals):
     full_data = full_data.to_json()
 
     return full_data
+
+
+@app.callback(
+    Output("debt_table", "data"),
+    [Input("shared_data", "children")]
+)
+def update_debts(shared_data):
+    """Update debt table.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    debts : dict
+        Debt table.
+
+    """
+    purch = pd.read_json(shared_data)
+
+    debts = purch.groupby(["name"])["price"].agg("sum")
+    debts = debts.sort_values(ascending=False)
+    debts = debts.reset_index()
+
+    return debts.to_dict("records")
