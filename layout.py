@@ -176,7 +176,33 @@ def build_debt_table():
     card = dbc.Card(
         children=[
             dbc.CardHeader(
-                html.H2("Prangerliste"),
+                children=[
+                    dbc.Row(
+                        children=[
+                            dbc.Col(
+                                html.H2("Prangerliste"),
+                                width=10
+                            ),
+                            dbc.Col(
+                                dbc.Button(
+                                    html.I(
+                                        className="fa fa-redo",
+                                        style={"font-size": "130%"}
+                                    ),
+                                    id="reset-button",
+                                    color="dark"
+                                ),
+                                width=2
+                            ),
+                            dbc.Tooltip(
+                                "Alle Schulden zurücksetzen",
+                                target="reset-button",
+                                placement="bottom",
+                                hide_arrow=False,
+                            )
+                        ]
+                    )
+                ]
             ),
             dbc.CardBody(
                 dash_table.DataTable(
