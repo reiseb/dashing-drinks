@@ -76,3 +76,35 @@ def update_debts(shared_data):
     debts = debts.reset_index()
 
     return debts.to_dict("records")
+
+
+@app.callback(
+    [Output("info-box-revenue-title", "children"),
+     Output("info-box-revenue-value", "children")],
+    [Input("shared_data", "children")]
+)
+def update_revenue(shared_data):
+    """Update revenue summary.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    title : str
+        Title of the info box.
+    value : str
+        Value of the info box.
+
+    """
+    purch = pd.read_json(shared_data)
+
+    date = pd.to_datetime(purch["date"]).min().date()
+    revenue = purch["price"].sum()
+
+    title = "Umsatz seit {}".format(date.strftime("%d.%m.%Y"))
+    value = "{:.2f} €".format(revenue)
+
+    return title, value

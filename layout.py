@@ -95,10 +95,10 @@ def build_info_cards():
                 color="#a07000"
             ),
             info_card(
-                ident="info-box-money",
+                ident="info-box-revenue",
                 icon="fa fa-money-bill-wave",
-                title="Umsatz",
-                value="0 €",
+                title="",
+                value="",
                 color="#216b27"
             ),
         ]
