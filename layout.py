@@ -91,7 +91,7 @@ def build_info_cards():
                 ident="info-box-royal",
                 icon="fa fa-crown",
                 title="Getränkekönig*in",
-                value="user",
+                value="",
                 color="#a07000"
             ),
             info_card(

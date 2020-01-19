@@ -108,3 +108,27 @@ def update_revenue(shared_data):
     value = "{:.2f} €".format(revenue)
 
     return title, value
+
+
+@app.callback(
+    Output("info-box-royal-value", "children"),
+    [Input("shared_data", "children")]
+)
+def update_royal(shared_data):
+    """Update info box for the person with the most drinks.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    value : str
+        Value of the info box.
+
+    """
+    purch = pd.read_json(shared_data)
+    counts = purch.groupby("name")["product"].count()
+    royal = counts.idxmax()
+    return royal
