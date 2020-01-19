@@ -83,10 +83,10 @@ def build_info_cards():
     cards = dbc.CardDeck(
         children=[
             info_card(
-                ident="info-box-favorite",
+                ident="info-box-bestseller",
                 icon="fa fa-heart",
-                title="Kassenschlager",
-                value="Bionade",
+                title="Bestseller des Monats",
+                value="",
                 color="#802020"
             ),
             info_card(
@@ -156,7 +156,7 @@ def info_card(ident, icon, title, value, color):
                                     children=value,
                                     style={
                                         'font-weight': 'bold',
-                                        'font-size': '300%',
+                                        'font-size': '250%',
                                         'color': '#eeeeee'
                                     }
                                 ),

@@ -47,6 +47,8 @@ def update_data(n_intervals):
         columns=['date', 'name', 'barcode', 'product', 'price']
     )
 
+    full_data["date"] = pd.to_datetime(full_data["date"])
+
     full_data = full_data.to_json()
 
     return full_data
@@ -140,7 +142,7 @@ def update_revenue(shared_data):
     """
     purch = pd.read_json(shared_data)
 
-    date = pd.to_datetime(purch["date"]).min().date()
+    date = purch["date"].min().date()
     revenue = purch["price"].sum()
 
     title = "Umsatz seit {}".format(date.strftime("%d.%m.%Y"))
@@ -171,3 +173,32 @@ def update_royal(shared_data):
     counts = purch.groupby("name")["product"].count()
     royal = counts.idxmax()
     return royal
+
+
+@app.callback(
+    Output("info-box-bestseller-value", "children"),
+    [Input("shared_data", "children")]
+)
+def update_bestseller(shared_data):
+    """Update info box for the person with the most drinks.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    value : str
+        Value of the info box.
+
+    """
+    purch = pd.read_json(shared_data)
+
+    this_month = pd.Timestamp.now().month
+
+    mask = (purch['date'].dt.month == this_month)
+    counts = purch[mask].groupby("product")["name"].count()
+    bestseller = counts.idxmax()
+
+    return bestseller
