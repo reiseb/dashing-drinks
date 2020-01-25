@@ -231,6 +231,7 @@ def update_inventory(shared_data):
     purchased_items = df.dropna()['product'].value_counts()
     stock = df.groupby('product')['stock'].first()
     remaining = stock.subtract(purchased_items, fill_value=0)
+    remaining = remaining.sort_index(ascending=False)
 
     plot = go.Figure(
         data=[
