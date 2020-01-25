@@ -22,7 +22,7 @@ def plot_inventory_chart(remaining):
 
     data = go.Bar(
         x=remaining.values,
-        y=remaining.index.values,
+        y=remaining.index,
         orientation='h',
     ),
 
