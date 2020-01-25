@@ -1,7 +1,7 @@
 """Callbacks for the main app."""
 import dash
 import pandas as pd
-import plotly.graph_objects as go
+import plot_utils
 from app import app
 from dash.dependencies import Input, Output
 
@@ -233,17 +233,6 @@ def update_inventory(shared_data):
     remaining = stock.subtract(purchased_items, fill_value=0)
     remaining = remaining.sort_index(ascending=False)
 
-    plot = go.Figure(
-        data=[
-            go.Bar(
-                x=remaining.values,
-                y=remaining.index.values,
-                orientation='h',
-            ),
-        ],
-        layout=go.Layout(
-            height=800
-        )
-    )
+    plot = plot_utils.plot_inventory_chart(remaining)
 
     return plot
