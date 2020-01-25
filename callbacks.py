@@ -209,6 +209,32 @@ def update_bestseller(shared_data):
 
 
 @app.callback(
+    Output('timeline', 'figure'),
+    [Input('shared_data', 'children')]
+)
+def update_timeline(shared_data):
+    """Update timeline plot.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    plot : plotly.graph_objects.Figure
+        Scatter plot showing the number of purchases per day.
+
+    """
+    df = pd.read_json(shared_data)
+
+    purch_per_day = df['date'].dt.floor('d').value_counts().sort_index()
+    fig = plot_utils.plot_timeline(purch_per_day)
+
+    return fig
+
+
+@app.callback(
     Output("inventory", "figure"),
     [Input("shared_data", "children")]
 )
