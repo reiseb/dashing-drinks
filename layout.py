@@ -57,7 +57,7 @@ def serve_layout():
             html.P(
                 dbc.CardDeck(
                     children=[
-                        build_purchase_timeline(),
+                        build_inventory_overview(),
                         build_chart(),
                         build_debt_table(),
                     ]
@@ -268,16 +268,19 @@ def build_debt_table():
     return card
 
 
-def build_purchase_timeline():
-    """Build a timeline of purchases."""
+def build_inventory_overview():
+    """Build an inventory summary."""
     card = dbc.Card(
         children=[
             dbc.CardHeader(
-                html.H2("Käufe über Zeit"),
+                html.H2("Inventar"),
             ),
             dbc.CardBody(
                 children=[
-                    dcc.Graph()
+                    dcc.Graph(
+                        id="inventory",
+                        figure={},
+                    ),
                 ]
             )
         ]

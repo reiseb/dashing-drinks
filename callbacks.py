@@ -1,6 +1,7 @@
 """Callbacks for the main app."""
 import dash
 import pandas as pd
+import plotly.graph_objects as go
 from app import app
 from dash.dependencies import Input, Output
 
@@ -35,16 +36,17 @@ def update_data(n_intervals):
     products = pd.read_csv(
         "./assets/produkt.txt",
         header=None,
-        names=['id', 'barcode', 'product', 'price']
+        names=['id', 'barcode', 'product', 'price', 'stock']
     )
 
     # combine data files into a single data frame
     full_data = purchases.merge(
         products,
-        left_on='barcode',
-        right_on='barcode'
+        on='barcode',
+        # retain rows for never purchased products to make the inventory work
+        how='outer',
     ).reindex(
-        columns=['date', 'name', 'barcode', 'product', 'price']
+        columns=['date', 'name', 'barcode', 'product', 'price', 'stock']
     )
 
     full_data["date"] = pd.to_datetime(full_data["date"])
@@ -204,3 +206,43 @@ def update_bestseller(shared_data):
     value = counts.idxmax()
 
     return value
+
+
+@app.callback(
+    Output("inventory", "figure"),
+    [Input("shared_data", "children")]
+)
+def update_inventory(shared_data):
+    """Update inventory chart.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    plot : plotly.graph_objects.Figure
+        Bar chart showing the number of remaining items.
+
+    """
+    df = pd.read_json(shared_data)
+
+    purchased_items = df.dropna()['product'].value_counts()
+    stock = df.groupby('product')['stock'].first()
+    remaining = stock.subtract(purchased_items, fill_value=0)
+
+    plot = go.Figure(
+        data=[
+            go.Bar(
+                x=remaining.values,
+                y=remaining.index.values,
+                orientation='h',
+            ),
+        ],
+        layout=go.Layout(
+            height=800
+        )
+    )
+
+    return plot
