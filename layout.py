@@ -98,7 +98,7 @@ def build_info_cards():
                 title="Bestseller des Monats",
                 value="",
                 color="#802020",
-                fontsize="200%"
+                fontsize="300%"
             ),
             info_card(
                 ident="info-box-royal",
