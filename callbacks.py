@@ -112,9 +112,9 @@ def update_debts(shared_data):
         Debt table.
 
     """
-    purch = pd.read_json(shared_data)
+    df = pd.read_json(shared_data)
 
-    debts = purch.groupby(["name"])["price"].agg("sum")
+    debts = df.groupby(["name"])["price"].agg("sum")
     debts = debts.sort_values(ascending=False)
     debts = debts.reset_index()
 
@@ -142,10 +142,10 @@ def update_revenue(shared_data):
         Value of the info box.
 
     """
-    purch = pd.read_json(shared_data)
+    df = pd.read_json(shared_data)
 
-    date = purch["date"].min().date()
-    revenue = purch["price"].sum()
+    date = df["date"].min().date()
+    revenue = df.dropna()['price'].sum()
 
     title = "Umsatz seit {}".format(date.strftime("%d.%m.%Y"))
     value = "{:.2f} €".format(revenue)
@@ -171,8 +171,8 @@ def update_royal(shared_data):
         Value of the info box.
 
     """
-    purch = pd.read_json(shared_data)
-    counts = purch.groupby("name")["product"].count()
+    df = pd.read_json(shared_data)
+    counts = df['name'].value_counts()
 
     value = "{:s} ({:d} St.)".format(counts.idxmax(), counts.max())
 
@@ -197,12 +197,12 @@ def update_bestseller(shared_data):
         Value of the info box.
 
     """
-    purch = pd.read_json(shared_data)
+    df = pd.read_json(shared_data)
 
     this_month = pd.Timestamp.now().month
 
-    mask = (purch['date'].dt.month == this_month)
-    counts = purch[mask].groupby("product")["name"].count()
+    mask = (df['date'].dt.month == this_month)
+    counts = df[mask].groupby("product")["name"].count()
     value = counts.idxmax()
 
     return value
