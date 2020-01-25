@@ -17,6 +17,9 @@ def plot_inventory_chart(remaining):
         Bar chart showing the number of remaining items.
 
     """
+    # calculate height of plot
+    height = len(remaining) * 30
+
     data = go.Bar(
         x=remaining.values,
         y=remaining.index.values,
@@ -42,7 +45,7 @@ def plot_inventory_chart(remaining):
         margin={'t': 0, 'b': 0, 'l': 200, 'r': 0},
         showlegend=False,
         hoverlabel=dict(font=dict(size=20)),
-        height=700,
+        height=height,
     )
 
     plot = go.Figure(
