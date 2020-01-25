@@ -53,6 +53,16 @@ def serve_layout():
                     ]
                 )
             ),
+            html.P(
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            build_timeline(),
+                            width=12
+                        )
+                    ]
+                )
+            ),
             # content
             html.P(
                 dbc.CardDeck(
@@ -180,6 +190,33 @@ def info_card(ident, icon, title, value, color, fontsize):
             ],
         ),
         style={'background-color': color}
+    )
+    return card
+
+
+def build_timeline():
+    """Build a timeline.
+
+    Returns
+    -------
+    card : dash_bootstrap_components.Card
+        Card with a dcc.Graph element.
+
+    """
+    card = dbc.Card(
+        children=[
+            dbc.CardHeader(
+                html.H2("Käufe über Zeit"),
+            ),
+            dbc.CardBody(
+                children=[
+                    dcc.Graph(
+                        id="timeline",
+                        figure={},
+                    ),
+                ]
+            )
+        ]
     )
     return card
 
