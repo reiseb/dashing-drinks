@@ -203,7 +203,10 @@ def update_bestseller(shared_data):
 
     mask = (df['date'].dt.month == this_month)
     counts = df[mask].groupby("product")["name"].count()
-    value = counts.idxmax()
+    try:
+        value = counts.idxmax()
+    except ValueError:
+        value = "N/A"
 
     return value
 
