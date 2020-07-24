@@ -227,3 +227,29 @@ def update_inventory(shared_data):
     plot = plot_utils.plot_inventory_chart(remaining)
 
     return plot
+
+
+@app.callback(
+    Output("statistics", "figure"),
+    [Input("shared_data", "children")]
+)
+def update_chart(shared_data):
+    """Update inventory chart.
+
+    Parameters
+    ----------
+    shared_data : str
+        JSON serialized pandas data frame containing purchase data.
+
+    Returns
+    -------
+    plot : plotly.graph_objects.Figure
+        Bar chart showing the number of remaining items.
+
+    """
+    df = pd.read_json(shared_data)
+    grouped_df = df.groupby(['name', 'product']).size()
+
+    plot = plot_utils.plot_statistics_chart(grouped_df)
+
+    return plot
