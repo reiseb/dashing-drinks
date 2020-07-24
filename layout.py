@@ -58,7 +58,11 @@ def serve_layout():
                     children=[
                         dbc.Col(
                             build_timeline(),
-                            width=12
+                            width=9
+                        ),
+                        dbc.Col(
+                            build_debt_table(),
+                            width=3
                         )
                     ]
                 )
@@ -68,8 +72,7 @@ def serve_layout():
                 dbc.CardDeck(
                     children=[
                         build_inventory_overview(),
-                        build_chart(),
-                        build_debt_table(),
+                        build_chart()
                     ]
                 )
             ),
@@ -248,7 +251,7 @@ def build_debt_table():
                     ],
                     data=[],
                     style_table={
-                        'maxHeight': '835px',
+                        'height': '450px',
                     },
                     style_header={
                         'backgroundColor': '#d1d1d1ff',
