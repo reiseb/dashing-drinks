@@ -158,7 +158,7 @@ def plot_statistics_chart(grouped_df):
                    ),
         margin={'t': 0, 'b': 0, 'l': 0, 'r': 0},
         showlegend=False,
-        hoverlabel=dict(font=dict(size=20)),
+        hoverlabel=dict(font=dict(size=20), namelength=-1),
         height=height,
         barmode='stack'
     )
