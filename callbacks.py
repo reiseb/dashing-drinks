@@ -1,5 +1,4 @@
 """Callbacks for the main app."""
-import dash
 import pandas as pd
 import plot_utils
 from app import app
@@ -55,44 +54,6 @@ def update_data(n_intervals):
     full_data = full_data.to_json()
 
     return full_data
-
-
-@app.callback(
-    [Output("modal", "is_open"),
-     Output("modal-input", "value")],
-    [Input("reset-button", "n_clicks"),
-     Input("modal-close-button", "n_clicks")]
-)
-def toggle_modal(reset_button, close_button):
-    """Toggle the modal to reset the debt list.
-
-    The value of the input field is always reset.
-
-    Parameters
-    ----------
-    reset_button : int
-        Number of clicks on the reset button in the debt list.
-    close_button : int
-        Number of clicks on the cancel button of the modal.
-
-    Returns
-    -------
-    toggle : bool
-        Value of the is_open property of the modal
-    value : str
-        Empty string to reset the input field.
-
-    """
-    # check which input has fired
-    ctx = dash.callback_context
-    trig = ctx.triggered[0]['prop_id']
-    toggle = False
-    value = ""
-
-    if trig == 'reset-button.n_clicks':
-        toggle = True
-
-    return toggle, value
 
 
 @app.callback(
