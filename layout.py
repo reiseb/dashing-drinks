@@ -225,7 +225,7 @@ def build_debt_table():
         children=[
             dbc.CardHeader(
                 children=[
-                    html.H2("Prangerliste"),
+                    html.H2("Ausstehende Zahlungen"),
                 ]
             ),
             dbc.CardBody(
