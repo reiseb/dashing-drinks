@@ -304,11 +304,14 @@ def build_chart():
     card = dbc.Card(
         children=[
             dbc.CardHeader(
-                html.H2("Statistik"),
+                html.H2("Wer trinkt was?"),
             ),
             dbc.CardBody(
                 children=[
-                    dcc.Graph()
+                    dcc.Graph(
+                        id="statistics",
+                        figure={},
+                    )
                 ]
             )
         ]
