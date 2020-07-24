@@ -30,7 +30,7 @@ def update_data(n_intervals):
     purchases = pd.read_csv(
         "./assets/purchase.txt",
         header=None,
-        names=['date', 'name', 'barcode']
+        names=['date', 'name', 'barcode', 'paid']
     )
 
     products = pd.read_csv(
@@ -46,7 +46,8 @@ def update_data(n_intervals):
         # retain rows for never purchased products to make the inventory work
         how='outer',
     ).reindex(
-        columns=['date', 'name', 'barcode', 'product', 'price', 'stock']
+        columns=['date', 'name', 'barcode',
+                 'paid', 'product', 'price', 'stock']
     )
 
     full_data["date"] = pd.to_datetime(full_data["date"])
@@ -114,7 +115,7 @@ def update_debts(shared_data):
     """
     df = pd.read_json(shared_data)
 
-    debts = df.groupby(["name"])["price"].agg("sum")
+    debts = df[df["paid"] == 0].groupby(["name"])["price"].agg("sum")
     debts = debts.sort_values(ascending=False)
     debts = debts.reset_index()
 
