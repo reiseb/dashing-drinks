@@ -164,7 +164,7 @@ def update_bestseller(shared_data):
     this_month = pd.Timestamp.now().month
 
     mask = (df['date'].dt.month == this_month)
-    counts = df[mask].groupby("product")["name"].count()
+    counts = df[mask].groupby("product").size()
     try:
         value = counts.idxmax()
     except ValueError:
