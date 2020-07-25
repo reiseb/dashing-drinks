@@ -246,8 +246,22 @@ def update_chart(shared_data):
 
     """
     df = pd.read_json(shared_data)
+
+    # How many drinks of each product did a person have?
     grouped_df = df.groupby(['name', 'product']).size()
 
-    plot = plot_utils.plot_statistics_chart(grouped_df)
+    # Product names of all consumed products
+    products = grouped_df.groupby('product').groups.keys()
+
+    # Total number of drinks per person
+    drinks_per_person = grouped_df.sum(level=[0])
+
+    # calculate percentage of each drink for each person
+    relative_drinks_per_person = {}
+    for product in products:
+        drinks = grouped_df[:, product].divide(drinks_per_person)
+        relative_drinks_per_person[product] = drinks
+
+    plot = plot_utils.plot_statistics_chart(relative_drinks_per_person)
 
     return plot

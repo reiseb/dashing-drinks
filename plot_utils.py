@@ -107,13 +107,13 @@ def plot_timeline(purch_per_day):
     return fig
 
 
-def plot_statistics_chart(grouped_df):
+def plot_statistics_chart(relative_drinks_per_person):
     """Plot a bar chart to visualize who drinks what.
 
     Parameters
     ----------
-    grouped_df : pandas.DataFrame
-        Full data frame grouped by "name" and "product".
+    relative_drinks_per_person : dict
+        Dictionary listing the relative amount of each drink per person.
 
     Returns
     -------
@@ -122,11 +122,10 @@ def plot_statistics_chart(grouped_df):
 
     """
     data = []
-    drinks_per_person = grouped_df.sum(level=[0])
 
-    for product in grouped_df.groupby('product').groups.keys():
-        person = drinks_per_person.index
-        drinks = grouped_df[:, product].divide(drinks_per_person)
+    for product in relative_drinks_per_person:
+        drinks = relative_drinks_per_person[product].values
+        person = relative_drinks_per_person[product].index
 
         bar = go.Bar(
             x=drinks,
@@ -138,7 +137,7 @@ def plot_statistics_chart(grouped_df):
         data.append(bar)
 
     # calculate height of plot
-    height = len(drinks_per_person) * 50
+    height = len(person) * 50
 
     layout = go.Layout(
         xaxis=dict(title='Anteil an Getränken',
