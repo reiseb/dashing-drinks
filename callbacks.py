@@ -219,10 +219,8 @@ def update_inventory(shared_data):
     """
     df = pd.read_json(shared_data)
 
-    purchased_items = df.dropna()['product'].value_counts()
     stock = df.groupby('product')['stock'].first()
-    remaining = stock.subtract(purchased_items, fill_value=0)
-    remaining = remaining.sort_index(ascending=False)
+    remaining = stock.sort_index(ascending=False)
 
     plot = plot_utils.plot_inventory_chart(remaining)
 
