@@ -1,0 +1,14 @@
+name: getraenke
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - dash
+  - dash-bootstrap-components
+  - dash-core-components
+  - dash-daq
+  - dash-html-components
+  - dash-table
+  - pandas
+  - plotly
+  - python-dotenv
