@@ -1,6 +1,10 @@
 """Main dash app."""
 import dash
 import layout
+from dotenv import load_dotenv
+
+# load environment variables
+load_dotenv()
 
 # app initialize
 app = dash.Dash(

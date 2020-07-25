@@ -1,4 +1,6 @@
 """Callbacks for the main app."""
+import os
+
 import pandas as pd
 import plot_utils
 from app import app
@@ -27,13 +29,13 @@ def update_data(n_intervals):
     """
     # read individual data files
     purchases = pd.read_csv(
-        "./assets/purchase.txt",
+        os.getenv("PURCHASE_FILE"),
         header=None,
         names=['date', 'name', 'barcode', 'paid']
     )
 
     products = pd.read_csv(
-        "./assets/produkt.txt",
+        os.getenv("PRODUCT_FILE"),
         header=None,
         names=['id', 'barcode', 'product', 'price', 'stock']
     )
