@@ -26,6 +26,7 @@ dashapp = dash.Dash(
             "content": "width=device-width, initial-scale=1"
         }
     ],
+    url_base_pathname='/getraenke/',
     server=server
 )
 
