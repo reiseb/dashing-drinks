@@ -1,6 +1,7 @@
 """Build the layout of the dashboard."""
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
+import dash_daq as daq
 import dash_html_components as html
 import dash_table
 from dash_table.Format import Format
@@ -307,7 +308,21 @@ def build_chart():
     card = dbc.Card(
         children=[
             dbc.CardHeader(
-                html.H2("Wer trinkt was?"),
+                dbc.Row(
+                    children=[
+                        dbc.Col(
+                            html.H2("Wer trinkt wie viel und was?"),
+                            width=10
+                        ),
+                        dbc.Col(
+                            daq.ToggleSwitch(
+                                id="stats_switch",
+                                value=False
+                            ),
+                            width=2
+                        )
+                    ]
+                )
             ),
             dbc.CardBody(
                 children=[

@@ -229,9 +229,10 @@ def update_inventory(shared_data):
 
 @app.callback(
     Output("statistics", "figure"),
-    [Input("shared_data", "children")]
+    [Input("shared_data", "children"),
+     Input("stats_switch", "value")]
 )
-def update_chart(shared_data):
+def update_chart(shared_data, relative_drinks):
     """Update inventory chart.
 
     Parameters
@@ -248,20 +249,25 @@ def update_chart(shared_data):
     df = pd.read_json(shared_data)
 
     # How many drinks of each product did a person have?
-    grouped_df = df.groupby(['name', 'product']).size()
+    grouped_df = df.groupby(["name", "product"]).size()
 
     # Product names of all consumed products
-    products = grouped_df.groupby('product').groups.keys()
+    products = grouped_df.groupby("product").groups.keys()
 
     # Total number of drinks per person
-    drinks_per_person = grouped_df.sum(level=[0])
+    abs_drinks_per_person = grouped_df.sum(level=[0]).sort_values()
 
     # calculate percentage of each drink for each person
-    relative_drinks_per_person = {}
+    rel_drinks_per_person = {}
     for product in products:
-        drinks = grouped_df[:, product].divide(drinks_per_person)
-        relative_drinks_per_person[product] = drinks
+        drinks = grouped_df[:, product].divide(abs_drinks_per_person)
+        # sort by total number of drinks per person
+        drinks = drinks.reindex(abs_drinks_per_person.index)
+        rel_drinks_per_person[product] = drinks
 
-    plot = plot_utils.plot_statistics_chart(relative_drinks_per_person)
+    if relative_drinks:
+        plot = plot_utils.plot_rel_drinks_per_person(rel_drinks_per_person)
+    else:
+        plot = plot_utils.plot_abs_drinks_per_person(abs_drinks_per_person)
 
     return plot

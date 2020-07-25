@@ -107,12 +107,12 @@ def plot_timeline(purch_per_day):
     return fig
 
 
-def plot_statistics_chart(relative_drinks_per_person):
+def plot_rel_drinks_per_person(rel_drinks_per_person):
     """Plot a bar chart to visualize who drinks what.
 
     Parameters
     ----------
-    relative_drinks_per_person : dict
+    rel_drinks_per_person : dict
         Dictionary listing the relative amount of each drink per person.
 
     Returns
@@ -123,9 +123,9 @@ def plot_statistics_chart(relative_drinks_per_person):
     """
     data = []
 
-    for product in relative_drinks_per_person:
-        drinks = relative_drinks_per_person[product].values
-        person = relative_drinks_per_person[product].index
+    for product in rel_drinks_per_person:
+        drinks = rel_drinks_per_person[product].values
+        person = rel_drinks_per_person[product].index
 
         bar = go.Bar(
             x=drinks,
@@ -141,6 +141,63 @@ def plot_statistics_chart(relative_drinks_per_person):
 
     layout = go.Layout(
         xaxis=dict(title='Anteil an Getränken',
+                   titlefont=dict(size=20),
+                   tickfont=dict(size=15),
+                   mirror=True,
+                   ticks='outside',
+                   showline=False,
+                   linewidth=1,
+                   ),
+        yaxis=dict(title='',
+                   titlefont=dict(size=20),
+                   tickfont=dict(size=15),
+                   mirror=False,
+                   showline=True,
+                   linewidth=1,
+                   ),
+        margin={'t': 0, 'b': 0, 'l': 0, 'r': 0},
+        showlegend=False,
+        hoverlabel=dict(font=dict(size=20), namelength=-1),
+        height=height,
+        barmode='stack'
+    )
+
+    fig = go.Figure(
+        data=data,
+        layout=layout
+    )
+
+    return fig
+
+
+def plot_abs_drinks_per_person(abs_drinks_per_person):
+    """Plot a bar chart to visualize who drinks what.
+
+    Parameters
+    ----------
+    abs_drinks_per_person : dict
+        Dictionary listing the total number of drinks per person.
+
+    Returns
+    -------
+    fig : plotly.graph_objects.Figure
+      Bar plot showing the number of each drink per person.
+
+    """
+    data = [
+        go.Bar(
+            x=abs_drinks_per_person.values,
+            y=abs_drinks_per_person.index,
+            hoverinfo=('y'),
+            orientation='h',
+        )
+    ]
+
+    # calculate height of plot
+    height = len(abs_drinks_per_person.index) * 50
+
+    layout = go.Layout(
+        xaxis=dict(title='Anzahl an Getränken',
                    titlefont=dict(size=20),
                    tickfont=dict(size=15),
                    mirror=True,
