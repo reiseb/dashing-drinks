@@ -75,7 +75,8 @@ def plot_timeline(purch_per_day):
     data = go.Scatter(
         x=purch_per_day.index,
         y=purch_per_day.values,
-        mode='lines+markers'
+        mode='lines+markers',
+        hovertemplate='<b>%{x}</b><br>%{y} Käufe<extra></extra>'
     )
 
     layout = go.Layout(
