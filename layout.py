@@ -212,7 +212,7 @@ def build_timeline():
                     dbc.Row(
                         children=[
                             dbc.Col(
-                                html.H2("Käufe über Zeit?"),
+                                html.H2("Käufe über Zeit"),
                                 width=9
                             ),
                             dbc.Col(
@@ -354,7 +354,7 @@ def build_chart():
                                 children=[
                                     dbc.Col(
                                         html.H4("Wie viel?"),
-                                        width=4,
+                                        width=5,
                                         style={'text-align': 'right'}
                                     ),
                                     dbc.Col(
@@ -367,7 +367,7 @@ def build_chart():
                                     ),
                                     dbc.Col(
                                         html.H4("Was?"),
-                                        width=4,
+                                        width=3,
                                         style={'text-align': 'left'}
                                     ),
                                 ],
