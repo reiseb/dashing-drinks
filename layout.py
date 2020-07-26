@@ -227,6 +227,7 @@ def build_timeline():
                                             daq.ToggleSwitch(
                                                 id="time_switch",
                                                 value=False,
+                                                color='#222299'
                                             ),
                                             width=4
                                         ),
@@ -360,6 +361,7 @@ def build_chart():
                                         daq.ToggleSwitch(
                                             id="stats_switch",
                                             value=False,
+                                            color='#222299'
                                         ),
                                         width=4,
                                     ),
