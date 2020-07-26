@@ -312,15 +312,33 @@ def build_chart():
                     children=[
                         dbc.Col(
                             html.H2("Wer trinkt wie viel und was?"),
-                            width=10
+                            width=7
                         ),
                         dbc.Col(
-                            daq.ToggleSwitch(
-                                id="stats_switch",
-                                value=False
+                            dbc.Row(
+                                children=[
+                                    dbc.Col(
+                                        html.H4("Wie viel?"),
+                                        width=4,
+                                        style={'text-align': 'right'}
+                                    ),
+                                    dbc.Col(
+                                        daq.ToggleSwitch(
+                                            id="stats_switch",
+                                            value=False,
+                                        ),
+                                        width=4,
+                                    ),
+                                    dbc.Col(
+                                        html.H4("Was?"),
+                                        width=4,
+                                        style={'text-align': 'left'}
+                                    ),
+                                ],
+                                style={'margin-top': '5px'}
                             ),
-                            width=2
-                        )
+                            width=5
+                        ),
                     ]
                 )
             ),
