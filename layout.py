@@ -20,7 +20,7 @@ def serve_layout():
 
     """
     layout = dbc.Container(
-        style={'max-width': '80%'},
+        style={'max-width': '2000px'},
         children=[
             # update every 15 minutes
             dcc.Interval(
