@@ -208,7 +208,41 @@ def build_timeline():
     card = dbc.Card(
         children=[
             dbc.CardHeader(
-                html.H2("Käufe über Zeit"),
+                children=[
+                    dbc.Row(
+                        children=[
+                            dbc.Col(
+                                html.H2("Käufe über Zeit?"),
+                                width=9
+                            ),
+                            dbc.Col(
+                                dbc.Row(
+                                    children=[
+                                        dbc.Col(
+                                            html.H4("Datum"),
+                                            width=4,
+                                            style={'text-align': 'right'}
+                                        ),
+                                        dbc.Col(
+                                            daq.ToggleSwitch(
+                                                id="time_switch",
+                                                value=False,
+                                            ),
+                                            width=4
+                                        ),
+                                        dbc.Col(
+                                            html.H4("Uhrzeit"),
+                                            width=4,
+                                            style={'text-align': 'left'}
+                                        ),
+                                    ],
+                                    style={'margin-top': '5px'}
+                                ),
+                                width=3
+                            ),
+                        ]
+                    )
+                ]
             ),
             dbc.CardBody(
                 children=[

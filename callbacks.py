@@ -174,15 +174,18 @@ def register_callbacks(dashapp):
 
     @dashapp.callback(
         Output('timeline', 'figure'),
-        [Input('shared_data', 'children')]
+        [Input('shared_data', 'children'),
+         Input('time_switch', 'value')]
     )
-    def update_timeline(shared_data):
+    def update_timeline(shared_data, time_of_day):
         """Update timeline plot.
 
         Parameters
         ----------
         shared_data : str
             JSON serialized pandas data frame containing purchase data.
+        time_of_day : boolean
+            True to show purchases by time of day, False for timeline.
 
         Returns
         -------
@@ -192,8 +195,12 @@ def register_callbacks(dashapp):
         """
         df = pd.read_json(shared_data)
 
-        purch_per_day = df['date'].dt.floor('d').value_counts().sort_index()
-        fig = plot_utils.plot_timeline(purch_per_day)
+        if time_of_day:
+            purch_per_time_of_day = df.groupby(df['date'].dt.hour).size()
+            fig = plot_utils.plot_purch_per_time_of_day(purch_per_time_of_day)
+        else:
+            purch_per_day = df.groupby(df['date'].dt.date).size()
+            fig = plot_utils.plot_timeline(purch_per_day)
 
         return fig
 
