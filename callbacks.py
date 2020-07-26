@@ -236,6 +236,8 @@ def register_callbacks(dashapp):
         ----------
         shared_data : str
             JSON serialized pandas data frame containing purchase data.
+        relative_drinks : boolean
+            True to show number of each drink per each person.
 
         Returns
         -------
