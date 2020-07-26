@@ -24,6 +24,7 @@ def plot_inventory_chart(remaining):
         x=remaining.values,
         y=remaining.index,
         orientation='h',
+        hovertemplate='<b>%{y}</b><br>%{x} Stück<extra></extra>'
     ),
 
     layout = go.Layout(
