@@ -78,7 +78,7 @@ def plot_timeline(purch_per_day):
     )
 
     layout = go.Layout(
-        xaxis=dict(title='Zeit',
+        xaxis=dict(title='Datum',
                    titlefont=dict(size=20),
                    tickfont=dict(size=15),
                    mirror=True,
