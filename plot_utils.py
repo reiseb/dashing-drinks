@@ -107,6 +107,55 @@ def plot_timeline(purch_per_day):
     return fig
 
 
+def plot_purch_per_time_of_day(purch_per_time_of_day):
+    """Plot a bar chart that shows number of purchases per hour.
+
+    Parameters
+    ----------
+    purch_per_time_of_day : pandas.Series
+      Series object containing the number of purchases per hour.
+      Index needs to be of time series type.
+
+    Returns
+    -------
+    fig : plotly.graph_objects.Figure
+      Bar plot showing the number of purchases per hour.
+
+    """
+    data = go.Bar(
+        x=purch_per_time_of_day.index,
+        y=purch_per_time_of_day.values,
+    )
+
+    layout = go.Layout(
+        xaxis=dict(title='Uhrzeit',
+                   titlefont=dict(size=20),
+                   tickfont=dict(size=15),
+                   mirror=True,
+                   ticks='outside',
+                   showline=False,
+                   linewidth=1,
+                   ),
+        yaxis=dict(title='Käufe',
+                   titlefont=dict(size=20),
+                   tickfont=dict(size=15),
+                   mirror=False,
+                   showline=True,
+                   linewidth=1,
+                   ),
+        margin={'t': 0, 'b': 0, 'l': 0, 'r': 0},
+        showlegend=False,
+        hoverlabel=dict(font=dict(size=20), namelength=-1),
+    )
+
+    fig = go.Figure(
+        data=data,
+        layout=layout
+    )
+
+    return fig
+
+
 def plot_rel_drinks_per_person(rel_drinks_per_person):
     """Plot a bar chart to visualize who drinks what.
 
