@@ -125,14 +125,21 @@ def plot_purch_per_time_of_day(purch_per_time_of_day):
     data = go.Bar(
         x=purch_per_time_of_day.index,
         y=purch_per_time_of_day.values,
+        customdata=purch_per_time_of_day.index + 1,
+        hovertemplate=('<b>%{x:.2f}-%{customdata:.2f} Uhr</b><br>'
+                       + '%{y:d} Stück<extra></extra>')
     )
 
     layout = go.Layout(
         xaxis=dict(title='Uhrzeit',
                    titlefont=dict(size=20),
                    tickfont=dict(size=15),
+                   tickson='boundaries',
+                   ticklen=10,
+                   dtick=1.0,
                    mirror=True,
                    ticks='outside',
+                   type='category',
                    showline=False,
                    linewidth=1,
                    ),
