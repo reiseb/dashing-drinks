@@ -216,7 +216,6 @@ def plot_abs_drinks_per_person(abs_drinks_per_person):
         showlegend=False,
         hoverlabel=dict(font=dict(size=20), namelength=-1),
         height=height,
-        barmode='stack'
     )
 
     fig = go.Figure(
