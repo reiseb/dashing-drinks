@@ -244,7 +244,7 @@ def plot_abs_drinks_per_person(abs_drinks_per_person):
         go.Bar(
             x=abs_drinks_per_person.values,
             y=abs_drinks_per_person.index,
-            hoverinfo=('y'),
+            hovertemplate=('<b>%{y}</b><br>%{x} Stück<extra></extra>'),
             orientation='h',
         )
     ]
