@@ -37,7 +37,7 @@ def serve_layout():
             # title
             html.H1(
                 children=('Getränkekasse'),
-                className='display-5',
+                className='display-3',
                 style={
                     'margin-top': '3rem',
                     'margin-bottom': '3rem'
