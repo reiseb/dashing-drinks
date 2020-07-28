@@ -205,6 +205,19 @@ def build_timeline():
         Card with a dcc.Graph element.
 
     """
+    radioitems = dbc.RadioItems(
+        options=[
+            {'label': 'Datum', 'value': 'no_filter'},
+            {'label': 'Monat', 'value': 'month'},
+            {'label': 'Wochentag', 'value': 'weekday'},
+            {'label': 'Uhrzeit', 'value': 'hour'},
+        ],
+        value='no_filter',
+        inline=True,
+        id='filter_time_by',
+        style={'font-size': '1rem', 'margin-top': '5px'}
+    )
+
     card = dbc.Card(
         children=[
             dbc.CardHeader(
@@ -213,33 +226,12 @@ def build_timeline():
                         children=[
                             dbc.Col(
                                 html.H2("Käufe über Zeit"),
-                                width=9
+                                width=7
                             ),
                             dbc.Col(
-                                dbc.Row(
-                                    children=[
-                                        dbc.Col(
-                                            html.H4("Datum"),
-                                            width=4,
-                                            style={'text-align': 'right'}
-                                        ),
-                                        dbc.Col(
-                                            daq.ToggleSwitch(
-                                                id="time_switch",
-                                                value=False,
-                                                color='#222299'
-                                            ),
-                                            width=4
-                                        ),
-                                        dbc.Col(
-                                            html.H4("Uhrzeit"),
-                                            width=4,
-                                            style={'text-align': 'left'}
-                                        ),
-                                    ],
-                                    style={'margin-top': '5px'}
-                                ),
-                                width=3
+                                radioitems,
+                                width=5,
+                                style={'text-align': 'right'}
                             ),
                         ]
                     )

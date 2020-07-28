@@ -175,17 +175,21 @@ def register_callbacks(dashapp):
     @dashapp.callback(
         Output('timeline', 'figure'),
         [Input('shared_data', 'children'),
-         Input('time_switch', 'value')]
+         Input('filter_time_by', 'value')]
     )
-    def update_timeline(shared_data, time_of_day):
+    def update_timeline(shared_data, filter_by):
         """Update timeline plot.
 
         Parameters
         ----------
         shared_data : str
             JSON serialized pandas data frame containing purchase data.
-        time_of_day : boolean
-            True to show purchases by time of day, False for timeline.
+        filter_time_by : str
+            One of the following options:
+                - ''
+                - 'month'
+                - 'weekday'
+                - 'hour'
 
         Returns
         -------
@@ -195,12 +199,29 @@ def register_callbacks(dashapp):
         """
         df = pd.read_json(shared_data)
 
-        if time_of_day:
-            purch_per_time_of_day = df.groupby(df['date'].dt.hour).size()
-            fig = plot_utils.plot_purch_per_time_of_day(purch_per_time_of_day)
+        # no filter -> default to timeline
+        if filter_by == 'no_filter':
+            purch = df.groupby(df['date'].dt.date).size()
+            fig = plot_utils.plot_timeline(purch)
+            return fig
+
+        # apply various filters
+        elif filter_by == 'hour':
+            purch = df.groupby(df['date'].dt.hour).size()
+        elif filter_by == 'weekday':
+            purch = df.groupby(df['date'].dt.day_name('de_DE.UTF-8')).size()
+            sort_mask = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag',
+                         'Freitag', 'Samstag', 'Sonntag']
+            purch = purch.reindex(sort_mask)
+        elif filter_by == 'month':
+            purch = df.groupby(df['date'].dt.month_name('de_DE.UTF-8')).size()
+            sort_mask = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                         'Juli', 'August', 'Oktober', 'November', 'Dezember']
+            purch = purch.reindex(sort_mask)
         else:
-            purch_per_day = df.groupby(df['date'].dt.date).size()
-            fig = plot_utils.plot_timeline(purch_per_day)
+            raise ValueError('Unknown filter {}'.format(filter_by))
+
+        fig = plot_utils.plot_purch_per_time(purch, filter_by)
 
         return fig
 

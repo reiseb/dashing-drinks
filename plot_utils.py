@@ -111,14 +111,19 @@ def plot_timeline(purch_per_day):
     return fig
 
 
-def plot_purch_per_time_of_day(purch_per_time_of_day):
+def plot_purch_per_time(purch, x_type):
     """Plot a bar chart that shows number of purchases per hour.
 
     Parameters
     ----------
-    purch_per_time_of_day : pandas.Series
-      Series object containing the number of purchases per hour.
+    purch : pandas.Series
+      Series object containing the number of purchases per time.
       Index needs to be of time series type.
+    x_type : str
+        One of the following:
+            - month
+            - weekday
+            - hour
 
     Returns
     -------
@@ -126,21 +131,30 @@ def plot_purch_per_time_of_day(purch_per_time_of_day):
       Bar plot showing the number of purchases per hour.
 
     """
+    if x_type == 'hour':
+        customdata = purch.index + 1
+        hovertemplate = (
+            '<b>%{x:.2f}-%{customdata:.2f} Uhr</b><br>'
+            + '%{y:d} Stück<extra></extra>'
+        )
+    else:
+        customdata = None
+        hovertemplate = '<b>%{x}</b><br>%{y} Käufe<extra></extra>'
+
     data = go.Bar(
-        x=purch_per_time_of_day.index,
-        y=purch_per_time_of_day.values,
-        customdata=purch_per_time_of_day.index + 1,
-        hovertemplate=('<b>%{x:.2f}-%{customdata:.2f} Uhr</b><br>'
-                       + '%{y:d} Stück<extra></extra>')
+        x=purch.index,
+        y=purch.values,
+        customdata=customdata,
+        hovertemplate=hovertemplate
     )
 
     layout = go.Layout(
-        xaxis=dict(title='Uhrzeit',
+        xaxis=dict(title='',
                    titlefont=dict(size=20),
                    tickfont=dict(size=15),
                    tickson='boundaries',
+                   tickvals=[n for n in purch.index],
                    ticklen=10,
-                   dtick=1.0,
                    mirror=True,
                    ticks='outside',
                    type='category',
