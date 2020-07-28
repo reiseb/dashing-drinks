@@ -215,7 +215,8 @@ def build_timeline():
         value='no_filter',
         inline=True,
         id='filter_time_by',
-        style={'font-size': '1rem', 'margin-top': '5px'}
+        labelClassName='h4',
+        style={'margin-top': '10px'}
     )
 
     card = dbc.Card(
@@ -226,11 +227,11 @@ def build_timeline():
                         children=[
                             dbc.Col(
                                 html.H2("Käufe über Zeit"),
-                                width=7
+                                width=5
                             ),
                             dbc.Col(
                                 radioitems,
-                                width=5,
+                                width=7,
                                 style={'text-align': 'right'}
                             ),
                         ]
