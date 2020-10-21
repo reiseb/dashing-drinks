@@ -216,7 +216,8 @@ def register_callbacks(dashapp):
         elif filter_by == 'month':
             purch = df.groupby(df['date'].dt.month_name('de_DE.UTF-8')).size()
             sort_mask = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-                         'Juli', 'August', 'Oktober', 'November', 'Dezember']
+                         'Juli', 'August', 'September', 'Oktober', 'November',
+                         'Dezember']
             purch = purch.reindex(sort_mask)
         else:
             raise ValueError('Unknown filter {}'.format(filter_by))
