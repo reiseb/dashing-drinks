@@ -7,8 +7,6 @@ dependencies:
   - dash-bootstrap-components
   - dash-core-components
   - dash-daq
-  - dash-html-components
-  - dash-table
   - pandas
   - plotly
   - python-dotenv

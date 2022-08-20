@@ -283,7 +283,7 @@ def register_callbacks(dashapp):
         products = grouped_df.groupby("product").groups.keys()
 
         # Total number of drinks per person
-        abs_drinks_per_person = grouped_df.sum(level=[0]).sort_values()
+        abs_drinks_per_person = grouped_df.groupby(level=0).sum().sort_values()
 
         # calculate percentage of each drink for each person
         rel_drinks_per_person = {}

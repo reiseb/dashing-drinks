@@ -1,10 +1,8 @@
 """Build the layout of the dashboard."""
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
 import dash_daq as daq
-import dash_html_components as html
-import dash_table
-from dash_table.Format import Format
+from dash import dash_table, dcc, html
+from dash.dash_table.Format import Format
 
 
 def serve_layout():
@@ -70,10 +68,16 @@ def serve_layout():
             ),
             # content
             html.P(
-                dbc.CardDeck(
+                dbc.Row(
                     children=[
-                        build_inventory_overview(),
-                        build_chart()
+                        dbc.Col(
+                            build_inventory_overview(),
+                            width=6
+                        ),
+                        dbc.Col(
+                            build_chart(),
+                            width=6
+                        ),
                     ]
                 )
             ),
@@ -92,32 +96,41 @@ def build_info_cards():
         cards are the same height and width.
 
     """
-    cards = dbc.CardDeck(
+    cards = dbc.Row(
         children=[
-            info_card(
-                ident="info-box-bestseller",
-                icon="fa fa-heart",
-                title="Bestseller des Monats",
-                value="",
-                color="#802020",
-                fontsize="300%"
+            dbc.Col(
+                info_card(
+                    ident="info-box-bestseller",
+                    icon="fa fa-heart",
+                    title="Bestseller des Monats",
+                    value="",
+                    color="#802020",
+                    fontsize="300%"
+                ),
+                width=4,
             ),
-            info_card(
-                ident="info-box-royal",
-                icon="fa fa-crown",
-                title="Getränkekönig*in",
-                value="",
-                color="#a07000",
-                fontsize="300%"
+            dbc.Col(
+                info_card(
+                    ident="info-box-royal",
+                    icon="fa fa-crown",
+                    title="Getränkekönig*in",
+                    value="",
+                    color="#a07000",
+                    fontsize="300%"
+                ),
+                width=4
             ),
-            info_card(
-                ident="info-box-revenue",
-                icon="fa fa-money-bill-wave",
-                title="",
-                value="",
-                color="#216b27",
-                fontsize="300%"
-            ),
+            dbc.Col(
+                info_card(
+                    ident="info-box-revenue",
+                    icon="fa fa-money-bill-wave",
+                    title="",
+                    value="",
+                    color="#216b27",
+                    fontsize="300%"
+                ),
+                width=4
+            )
         ]
     )
     return cards
