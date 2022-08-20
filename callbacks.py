@@ -2,8 +2,9 @@
 import os
 
 import pandas as pd
-import plot_utils
 from dash.dependencies import Input, Output
+
+from . import plot_utils
 
 
 def register_callbacks(dashapp):

@@ -1,9 +1,9 @@
 """Main dash app."""
-import callbacks
 import dash
 import flask
-import layout
 from dotenv import load_dotenv
+
+from . import callbacks, layout
 
 # flask server for production environment
 server = flask.Flask(__name__)
