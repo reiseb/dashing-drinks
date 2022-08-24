@@ -21,10 +21,11 @@ def plot_inventory_chart(remaining):
     height = len(remaining) * 30
 
     data = go.Bar(
-        x=remaining.values,
+        x=remaining['stock'].values,
         y=remaining.index,
+        customdata=remaining['price'],
         orientation='h',
-        hovertemplate='<b>%{y}</b><br>%{x} Stück<extra></extra>'
+        hovertemplate='<b>%{y}</b><br>%{x} Stück<br>%{customdata:.2f} EUR<extra></extra>',
     ),
 
     layout = go.Layout(

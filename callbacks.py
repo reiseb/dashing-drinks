@@ -247,7 +247,7 @@ def register_callbacks(dashapp):
         """
         df = pd.read_json(shared_data)
 
-        stock = df.groupby('product')['stock'].first()
+        stock = df.groupby('product')[['stock', 'price']].first()
         remaining = stock.sort_index(ascending=False)
 
         plot = plot_utils.plot_inventory_chart(remaining)
